@@ -1,0 +1,68 @@
+body {
+  background: url('/css/as.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+  color: #FFD700; /* Bright yellow text */
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.85); /* Deep black overlay */
+  padding: 2em;
+  border-radius: 10px;
+  margin: 5em auto;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 0 20px #FFD700; /* Yellow glow */
+}
+
+h1 {
+  margin-bottom: 1.5em;
+  color: #FFD700;
+}
+
+.btn {
+  display: inline-block;
+  background: #FFD700; /* Yellow button */
+  color: #000; /* Black text */
+  text-decoration: none;
+  padding: 0.8em 1.5em;
+  margin: 0.5em;
+  border-radius: 5px;
+  transition: background 0.3s, color 0.3s;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background: #000; /* Black on hover */
+  color: #FFD700; /* Yellow text */
+  border: 2px solid #FFD700;
+}
+
+input, textarea, select {
+  width: 80%;
+  padding: 0.7em;
+  margin: 0.5em 0;
+  border: 2px solid #FFD700;
+  border-radius: 5px;
+  background-color: #000;
+  color: #FFD700;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #FFD700;
+  opacity: 0.7;
+}
+
+button.btn {
+  background: #FFD700;
+  color: #000;
+}
+
+button.btn:hover {
+  background: #000;
+  color: #FFD700;
+  border: 2px solid #FFD700;
+}

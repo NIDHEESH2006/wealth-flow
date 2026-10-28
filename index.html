@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WealthFlow — Smart Finance Terminal</title>
+  <style>
+    :root {
+      --theme: #E50914;
+      --theme-glow: rgba(229, 9, 20, 0.45);
+      --bg-dark: #0a0a0a;
+      --card-bg: rgba(18, 18, 18, 0.85);
+      --text-main: #ffffff;
+      --text-muted: #aaaaaa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%) no-repeat center center fixed;
+      background-size: cover;
+      color: var(--theme);
+      min-height: 100vh;
+    }
+
+    /* Live Ticker Bar */
+    .ticker-bar {
+      background: #050505;
+      border-bottom: 1px solid #330000;
+      color: #cccccc;
+      font-size: 0.85em;
+      padding: 0.5em 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .ticker-content {
+      display: inline-block;
+      animation: marquee 25s linear infinite;
+    }
+
+    .ticker-item {
+      margin-right: 3em;
+    }
+
+    .ticker-item span.up {
+      color: #00ff66;
+    }
+
+    .ticker-item span.down {
+      color: #ff3b3b;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.95);
+      padding: 1em 2em;
+      box-shadow: 0 4px 20px var(--theme-glow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid #330000;
+    }
+
+    .navbar h2 {
+      color: var(--theme);
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 8px var(--theme);
+      font-size: 1.5em;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      color: var(--text-main);
+      background: #121212;
+      padding: 0.4em 0.8em;
+      border-radius: 20px;
+      border: 1px solid #330000;
+    }
+
+    .profile img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 8px;
+      border: 2px solid var(--theme);
+      box-shadow: 0 0 5px var(--theme);
+      object-fit: cover;
+    }
+
+    .profile span {
+      font-weight: bold;
+      font-size: 0.9em;
+      letter-spacing: 0.5px;
+    }
+
+    .menu-icon {
+      font-size: 26px;
+      cursor: pointer;
+      color: var(--theme);
+      display: none;
+    }
+
+    /* Main container */
+    .container {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      padding: 2.5em;
+      border-radius: 12px;
+      margin: 3em auto;
+      width: 90%;
+      max-width: 650px;
+      text-align: center;
+      box-shadow: 0 0 25px var(--theme-glow);
+      border: 1px solid #330000;
+    }
+
+    h1 {
+      margin-top: 0;
+      color: var(--text-main);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      font-size: 2.2em;
+      margin-bottom: 0.3em;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      margin-bottom: 2em;
+      font-size: 1.05em;
+    }
+
+    /* Quick Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1em;
+      margin-bottom: 2em;
+    }
+
+    .stat-card {
+      background: #121212;
+      border: 1px solid #330000;
+      padding: 1em;
+      border-radius: 8px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--theme);
+      transform: translateY(-2px);
+    }
+
+    .stat-card h3 {
+      margin: 0;
+      color: var(--theme);
+      font-size: 1.2em;
+    }
+
+    .stat-card span {
+      font-size: 0.8em;
+      color: var(--text-muted);
+    }
+
+    /* Interactive Buttons Grid */
+    .menu-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #121212;
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 1em 1.5em;
+      border: 1px solid #330000;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.05em;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+    .btn:hover {
+      background: var(--theme);
+      color: #000;
+      border-color: var(--theme);
+      transform: translateY(-3px);
+      box-shadow: 0 0 15px var(--theme-glow);
+    }
+
+    /* Footer / Status */
+    .footer-status {
+      margin-top: 2em;
+      font-size: 0.85em;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      height: 8px;
+      width: 8px;
+      background-color: #00ff66;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 6px #00ff66;
+      margin-right: 5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        width: 95%;
+        padding: 1.5em;
+        margin: 1.5em auto;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Live Market Ticker Bar -->
+  <div class="ticker-bar">
+    <div class="ticker-content">
+      <span class="ticker-item">BTC/USD: <strong>$67,420.00</strong> <span class="up">▲ +2.4%</span></span>
+      <span class="ticker-item">ETH/USD: <strong>$3,510.50</strong> <span class="up">▲ +1.8%</span></span>
+      <span class="ticker-item">EUR/USD: <strong>1.0824</strong> <span class="down">▼ -0.12%</span></span>
+      <span class="ticker-item">NIFTY 50: <strong>24,850.20</strong> <span class="up">▲ +0.65%</span></span>
+      <span class="ticker-item">GOLD: <strong>$2,740.10</strong> <span class="up">▲ +0.42%</span></span>
+    </div>
+  </div>
+
+  <div class="navbar">
+    <h2>⚡ WEALTH FLOW</h2>
+    <div class="profile">
+      <img src="css/profile.jpg" alt="User profile picture" onerror="this.src='https://via.placeholder.com/40/121212/E50914?text=WF'" />
+      <span>MILES</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Smart Finance Hub</h1>
+    <p class="subtitle">Master your trades, track habits, and simulate wealth growth.</p>
+
+    <!-- Quick Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>63%</h3>
+        <span>Win Rate</span>
+      </div>
+      <div class="stat-card">
+        <h3>2.2:1</h3>
+        <span>Avg Ratio</span>
+      </div>
+      <div class="stat-card">
+        <h3>100%</h3>
+        <span>Secured</span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Buttons -->
+    <div class="menu-buttons">
+      <a href="pages/trading-journal.html" class="btn">📒 One-Click Trading Journal</a>
+      <a href="pages/investment-simulator.html" class="btn">📊 Investment Simulator</a>
+      <a href="pages/learning-hub.html" class="btn">📚 Financial Learning Hub</a>
+      <a href="pages/flash-courses.html" class="btn">⚡ Mini Flash Courses</a>
+      <a href="pages/habit-tracker.html" class="btn">🧠 Daily Habit Tracker</a>
+      <a href="pages/persona-quiz.html" class="btn">🧪 Finance Persona Quiz</a>
+    </div>
+
+    <div class="footer-status">
+      <span class="status-dot"></span> System Online • Live Session Active
+    </div>
+  </div>
+
+</body>
+</html>git init
